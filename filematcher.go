@@ -7,15 +7,15 @@ import (
 	"github.com/ahmedalkabir/filematcher/types"
 )
 
-type Matcher struct {
+type matcher struct {
 	Detect matchers.MatcherFunc
 	Type   types.TypesEnum
 }
 
-var ListOfMatchers []Matcher
+var listOfMatchers []matcher
 
 func init() {
-	ListOfMatchers = []Matcher{
+	listOfMatchers = []matcher{
 		{matchers.Jpeg, types.JPEG_Type},
 		{matchers.Png, types.PNG_Type},
 		{matchers.Bmp, types.BMP_Type},
@@ -39,7 +39,7 @@ func Match(buf []byte) (types.FileMatcher, error) {
 
 	// let's iterate over matchers and
 	// detect the file
-	for _, matcher := range ListOfMatchers {
+	for _, matcher := range listOfMatchers {
 		if matcher.Detect(buf) {
 			file.Type = matcher.Type
 		}
