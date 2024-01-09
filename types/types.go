@@ -34,7 +34,7 @@ type FileMatcher struct {
 // Errors =======================================================================
 
 // UnSupportedFile
-var ErrUnSupportedFile = errors.New("Error: File is Not Supported")
+var ErrUnSupportedFile = errors.New("Error: The File is Not Valid or Corrupted!!")
 
 // UnSupportedFile
 var ErrEmptyBuffer = errors.New("Error: Buffer is Empty")
