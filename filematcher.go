@@ -19,7 +19,10 @@ func init() {
 		{matchers.Bmp, types.BMP_Type},
 		{matchers.Pdf, types.PDF_Type},
 		{matchers.Doc, types.DOC_Type},
-		{matchers.Xls, types.XLS_Type}}
+		{matchers.Xls, types.XLS_Type},
+		{matchers.Ppt, types.PPT_Type},
+		{matchers.Zip, types.ZIP_Type},
+	}
 }
 
 func Match(buf []byte) (types.FileMatcher, error) {

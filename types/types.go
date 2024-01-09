@@ -17,11 +17,14 @@ const (
 	DOC_Type
 	XLSX_Type
 	XLS_Type
+	PPTX_Type
+	PPT_Type
+	ZIP_Type
 )
 
 func (i TypesEnum) String() string {
 	return [...]string{"Unknown Type", "jpeg", "jpg", "png",
-		"BMP", "pdf", "docx", "doc", "xlsx", "xls"}[i-1]
+		"BMP", "pdf", "docx", "doc", "xlsx", "xls", "pptx", "ppt", "zip"}[i-1]
 }
 
 type FileMatcher struct {

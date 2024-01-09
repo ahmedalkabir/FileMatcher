@@ -87,3 +87,29 @@ func Xls(buf []byte) bool {
 	}
 	return false
 }
+
+func Ppt(buf []byte) bool {
+	if len(buf) > 513 {
+		return buf[0] == 0xD0 && buf[1] == 0xCF &&
+			buf[2] == 0x11 && buf[3] == 0xE0 &&
+			buf[512] == 0xA0 && buf[513] == 0x46 // to make sure it's a really Ppt file
+	}
+	return false
+}
+
+func Zip(buf []byte) bool {
+	if len(buf) > 3 {
+		isItZipFirst := buf[0] == 0x50 && buf[1] == 0x4B
+
+		switch {
+		case isItZipFirst && buf[2] == 0x03 && buf[3] == 0x04:
+			return true
+		case isItZipFirst && buf[2] == 0x05 && buf[3] == 0x06: // empty archive
+			return true
+		case isItZipFirst && buf[2] == 0x07 && buf[3] == 0x08: // spanned archive
+			return true
+		}
+	}
+	return false
+
+}
