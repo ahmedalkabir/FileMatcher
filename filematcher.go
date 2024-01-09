@@ -1,6 +1,8 @@
 package filematcher
 
 import (
+	"crypto/md5"
+
 	"github.com/ahmedalkabir/filematcher/matchers"
 	"github.com/ahmedalkabir/filematcher/types"
 )
@@ -48,4 +50,13 @@ func Match(buf []byte) (types.FileMatcher, error) {
 	}
 
 	return file, nil
+}
+
+func CheckSumMD5(buf []byte, len_buf int) [16]byte {
+	if len_buf != 0 {
+		if len(buf) > len_buf {
+			buf = buf[:len_buf]
+		}
+	}
+	return md5.Sum(buf)
 }
