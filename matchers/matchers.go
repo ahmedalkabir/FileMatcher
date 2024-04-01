@@ -50,12 +50,35 @@ func Psd(buf []byte) bool {
 
 // Documents ======================================================================
 func Pdf(buf []byte) bool {
-	if len(buf) > 4 {
-		return buf[0] == 0x25 &&
-			buf[1] == 0x50 &&
-			buf[2] == 0x44 &&
-			buf[3] == 0x46 &&
-			buf[4] == 0x2D
+	// for the context
+	// based on the PDF Specification
+	// the first line of a PDF file shall be a header consisting of the 5 characters %PDF-
+	// followed by a version number of the form 1.N where N is a digit between 0 and 7.
+
+	// A conforming reader shall accept files with any of the following headers:
+	// %PDF-1.0
+	// %PDF-1.1
+	// etc....
+
+	// but there's some files don't follow these requirements proposed by PDF Specifications
+	// and put the header at first 1024 bytes instead of the first line of a PDF
+
+	buf_length := len(buf)
+	pdfHeader := []byte{0x25, 0x50, 0x44, 0x46, 0x2D}
+
+	if buf_length > 4 {
+
+		// a valid correct pdf
+		if compareSlices(buf[:5], pdfHeader, 5) {
+			return true
+		} else {
+			// peek the slices until we find the header
+			for i := range buf {
+				if compareSlices(buf[i:i+5], pdfHeader, 5) {
+					return true
+				}
+			}
+		}
 	}
 	return false
 }
